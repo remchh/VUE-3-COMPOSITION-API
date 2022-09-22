@@ -1,42 +1,40 @@
 <template>
   <div class="home">
     <h2 ref="myTitleRef"> {{ appTitle }} </h2>
-    <h3>{{ counterData.title }}:</h3>
+    <h3>{{ counter.title }}</h3>
     <div>
-      <button class="btn" @click="decreaseCounter(2)">--</button>
-      <button class="btn" @click="decreaseCounter(1)">-</button>
-      <span class="counter">{{ counterData.counter }}</span>
-      <button class="btn" @click="increaseCounter(1, $event)">+</button>
-      <button class="btn" @click="increaseCounter(2)">++</button>
+      <button class="btn" @click="counter.decreaseCounter(2)" >--</button>
+      <button class="btn" @click="counter.decreaseCounter(1)">-</button>
+      <span class="counter"> {{ counter.count }} </span>
+      <button class="btn" @click="counter.increaseCounter(1)">+</button>
+      <button class="btn" @click="counter.increaseCounter(2)">++</button>
     </div>
-    <p> The counter is {{ oddOrEven }}</p>
+    <p> The counter is {{ counter.oddOrEven }}</p>
     <div class="edit">
       <h4>Edit counter title</h4>
-      <input v-model="counterData.title" type="text" v-autofocus>
+      <input
+        v-model="counter.title"
+        v-autofocus
+        type="text"
+      >
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, onBeforeUpdate, onUpdated, onActivated,    onDeactivated} from 'vue'
+import { ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted, onBeforeUpdate, onUpdated, onActivated, onDeactivated} from 'vue'
 
 import { vAutofocus } from '@/directives/vAutofocus'
-import { useCounter } from '@/use/useCounter'
+import { useCounterStore } from '../stores/counter';
 
 //const counter = ref(0),
   //     title = ref('My counter')
-
-
-
-
-
 
 const appTitle = ref('My Title App') 
 
 const myTitleRef = ref(null) //Template ref
 
-const { counterData, oddOrEven, increaseCounter, decreaseCounter} = useCounter()
-
+const counter = useCounterStore()
 
 /*
 LIFECYCLE HOOKS
